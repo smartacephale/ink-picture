@@ -1,9 +1,10 @@
+import { clearTimeout, setTimeout } from "node:timers";
 import { useStdin, useStdout } from "ink";
 import checkIsUnicodeSupported from "is-unicode-supported";
 import iterm2Version from "iterm2-version";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import supportsColor from "supports-color";
-import queryEscapeSequence from "../utils/queryEscapeSequence.js";
+import queryEscapeSequence from "../utils/queryEscapeSequence.ts";
 
 function supportsITerm2(context?: { supportsSixelGraphics: boolean }) {
   if (process.env.TERM_PROGRAM === "iTerm.app") {
@@ -13,9 +14,9 @@ function supportsITerm2(context?: { supportsSixelGraphics: boolean }) {
   } else if (process.env.TERM_PROGRAM === "WezTerm") {
     // WezTerm is compatible with iTerm2 inline images starting from version 20220319-142410-0fcdea07
     // See https://wezterm.org/imgcat.html
-    const version = process.env.TERM_PROGRAM_VERSION;
+    const version = process.env.TERM_PROGRAM_VERSION as string;
     if (!version) return false;
-    const date = parseInt(version.split("-")[0]);
+    const date = parseInt(version.split("-")[0], 10);
     if (!Number.isNaN(date) && date >= 20220319) {
       return true;
     }
@@ -24,7 +25,7 @@ function supportsITerm2(context?: { supportsSixelGraphics: boolean }) {
     // See https://www.reddit.com/r/kde/comments/ul0irg/konsole_2204_with_sixel_support_is_out_of_beta_now/
     const version = process.env.KONSOLE_VERSION;
     if (!version) return false;
-    const date = parseInt(version);
+    const date = parseInt(version, 10);
     if (!Number.isNaN(date) && date >= 220400) {
       return true;
     }

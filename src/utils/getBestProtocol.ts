@@ -1,4 +1,4 @@
-import type { TerminalCapabilities } from "../context/TerminalInfo.js";
+import type { TerminalCapabilities } from "../context/TerminalInfo.tsx";
 
 // Heuristic for selecting the best image protocol based on terminal capabilities
 function getBestProtocol(

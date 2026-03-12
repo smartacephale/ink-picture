@@ -2,12 +2,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Box, render, Text, useApp, useInput } from "ink";
 import React from "react";
-import Image from "../src/components/image/index.js";
+import Image from "../src/components/image/index.tsx";
 import {
   type TerminalCapabilities,
   TerminalInfoProvider,
   useTerminalCapabilities,
-} from "../src/context/TerminalInfo.js";
+} from "../src/context/TerminalInfo.tsx";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -135,7 +135,6 @@ function ProtocolDemo({ config }: { config: ProtocolConfig }) {
             src={getImagePath()}
             protocol={config.protocol}
             alt={`${config.name} demo`}
-            allowPartial={getAllowPartial()}
           />
         ) : (
           <Box

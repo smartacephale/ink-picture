@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
-import { useTerminalCapabilities } from "../../context/TerminalInfo.js";
-import { getBestProtocol } from "../../utils/getBestProtocol.js";
-import AsciiImage from "./Ascii.js";
-import BrailleImage from "./Braille.js";
-import HalfBlockImage from "./HalfBlock.js";
-import ITerm2Image from "./ITerm2.js";
-import KittyImage from "./Kitty.js";
-import type { ImageProps } from "./protocol.js";
-import SixelImage from "./Sixel.js";
+import { useTerminalCapabilities } from "../../context/TerminalInfo.tsx";
+import { getBestProtocol } from "../../utils/getBestProtocol.ts";
+import AsciiImage from "./Ascii.tsx";
+import BrailleImage from "./Braille.tsx";
+import HalfBlockImage from "./HalfBlock.tsx";
+import ITerm2Image from "./ITerm2.tsx";
+import KittyImage from "./Kitty.tsx";
+import type { ImageProps } from "./protocol.ts";
+import SixelImage from "./Sixel.tsx";
 
 const imageProtocols = {
   ascii: AsciiImage,

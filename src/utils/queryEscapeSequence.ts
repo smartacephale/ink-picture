@@ -1,3 +1,5 @@
+import { clearTimeout, setTimeout } from "node:timers";
+
 /**
  * Send a message to stdout and wait for a response from stdin.
  * Meant for getting replies from control sequences

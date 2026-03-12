@@ -1,14 +1,16 @@
-import { Box, type DOMElement, Newline, Text, useStdout } from "ink";
+import { Buffer } from "node:buffer";
+import { Box, type DOMElement, Text, useStdout } from "ink";
 import React, { useEffect, useRef, useState } from "react";
 import {
   useTerminalCapabilities,
   useTerminalDimensions,
-} from "../../context/TerminalInfo.js";
+} from "../../context/TerminalInfo.tsx";
 // import { backgroundContext } from "ink";
-import usePosition from "../../hooks/usePosition.js";
-import generateKittyId from "../../utils/generateKittyId.js";
-import { calculateImageSize, fetchImage } from "../../utils/image.js";
-import type { ImageProps } from "./protocol.js";
+import usePosition from "../../hooks/usePosition.ts";
+import generateKittyId from "../../utils/generateKittyId.ts";
+import { calculateImageSize, fetchImage } from "../../utils/image.ts";
+import { DrawError } from "./draw-error.tsx";
+import type { ImageProps } from "./protocol.ts";
 
 /**
  * Kitty Image Rendering Component
@@ -62,7 +64,6 @@ function KittyImage(props: ImageProps) {
     onSupportDetected,
     width: propsWidth,
     height: propsHeight,
-    allowPartial,
   } = props;
 
   // Detect support and notify parent
@@ -91,20 +92,20 @@ function KittyImage(props: ImageProps) {
       if (!componentPosition) return;
       if (!terminalDimensions) return;
 
-      const image = await fetchImage(src, allowPartial);
+      const image = await fetchImage(src);
       if (!image) {
         setHasError(true);
         return;
       }
       setHasError(false);
 
-      const metadata = await image.metadata();
+      const { width: imgWidth, height: imgHeight } = image;
 
       const { width: maxWidth, height: maxHeight } = componentPosition;
       const { width, height } = calculateImageSize({
         maxWidth: maxWidth * terminalDimensions.cellWidth,
         maxHeight: maxHeight * terminalDimensions.cellHeight,
-        originalAspectRatio: metadata.width / metadata.height,
+        originalAspectRatio: imgWidth / imgHeight, // Use properties directly
         specifiedWidth: propsWidth
           ? propsWidth * terminalDimensions.cellWidth
           : undefined,
@@ -118,7 +119,7 @@ function KittyImage(props: ImageProps) {
       try {
         const imageId = generateKittyId();
 
-        const data = await resizedImage.png().toBuffer();
+        const data = Buffer.from(await resizedImage.encode());
         const chunkSize = 4096; // Kitty protocol pixel data max chunk size
         const base64Data = data.toString("base64");
 
@@ -156,7 +157,6 @@ function KittyImage(props: ImageProps) {
     componentPosition?.width,
     componentPosition?.height,
     terminalDimensions,
-    allowPartial,
     stdout.write,
   ]);
 
@@ -222,15 +222,7 @@ function KittyImage(props: ImageProps) {
           {props.alt || "Loading..."}
         </Text>
       ) : (
-        <Box flexDirection="column" alignItems="center" justifyContent="center">
-          {hasError && (
-            <Text color="red">
-              X<Newline />
-              Load failed
-            </Text>
-          )}
-          <Text color="gray">{props.alt || "Loading..."}</Text>
-        </Box>
+        <DrawError hasError={hasError} alt={props.alt} />
       )}
     </Box>
   );

@@ -10,7 +10,7 @@ import type { JSX } from "react";
 export interface ImageProps {
   /**
    * The source URL or file path of the image to render
-   * Supports all image formats supported by sharp (JPEG, PNG, WebP, AVIF, GIF, SVG, TIFF)
+   * Supports all image formats supported by ImageScript (JPEG, PNG, WebP, AVIF, GIF, SVG, TIFF)
    */
   src: string;
   /** Optional width constraint in terminal characters/cells */
@@ -19,8 +19,6 @@ export interface ImageProps {
   height?: number;
   /** Alternative text displayed while loading or on error */
   alt?: string;
-  /** Supports partially loaded image reading */
-  allowPartial?: boolean;
   /** Callback function to notify parent component about protocol support detection */
   onSupportDetected: (isSupported: boolean) => void;
 }

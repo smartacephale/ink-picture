@@ -32,20 +32,20 @@
  */
 
 // Individual image rendering components - for advanced usage
-export { default as AsciiImage } from "./components/image/Ascii.js";
-export { default as BrailleImage } from "./components/image/Braille.js";
-export { default as HalfBlockImage } from "./components/image/HalfBlock.js";
-export type { ImageProtocolName } from "./components/image/index.js";
+export { default as AsciiImage } from "./components/image/Ascii.tsx";
+export { default as BrailleImage } from "./components/image/Braille.tsx";
+export { default as HalfBlockImage } from "./components/image/HalfBlock.tsx";
+export type { ImageProtocolName } from "./components/image/index.tsx";
 // Main Image component - the primary export
-export { default } from "./components/image/index.js";
+export { default } from "./components/image/index.tsx";
 // Types and interfaces
-export type { ImageProps, ImageProtocol } from "./components/image/protocol.js";
-export { default as SixelImage } from "./components/image/Sixel.js";
+export type { ImageProps, ImageProtocol } from "./components/image/protocol.ts";
+export { default as SixelImage } from "./components/image/Sixel.tsx";
 export type {
   TerminalCapabilities,
   TerminalDimensions,
   TerminalInfo,
-} from "./context/TerminalInfo.js";
+} from "./context/TerminalInfo.tsx";
 // Terminal info context and provider - required for Image component
 export {
   TerminalInfoContext,
@@ -53,9 +53,9 @@ export {
   useTerminalCapabilities,
   useTerminalDimensions,
   useTerminalInfo,
-} from "./context/TerminalInfo.js";
+} from "./context/TerminalInfo.tsx";
 
 // Utility hooks
-export { default as usePosition } from "./hooks/usePosition.js";
+export { default as usePosition } from "./hooks/usePosition.ts";
 
 // Note: utils are kept internal for now, but can be exported later if needed
